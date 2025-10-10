@@ -1,0 +1,4 @@
+pytest
+pyright
+pre-commit
+ruff
