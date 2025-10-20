@@ -34,8 +34,8 @@ setup(
     description="The Python implementation of client for async communication with sc-server",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/kretoffer/py_sc_async_client",
-    author="kretoffer",
+    url="https://github.com/ostis-ai/py_sc_async_client",
+    author="ostis-ai",
     license="MIT",
     classifiers=[
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -54,7 +54,7 @@ setup(
     python_requires=">=3.8, <4",
     install_requires=INSTALL_REQUIRES,
     project_urls={
-        "Bug Reports": "https://github.com/ostis-ai/py-sc-client/issues",
-        "Source": "https://github.com/kretoffer/py_sc_async_client",
+        "Bug Reports": "https://github.com/ostis-ai/py_sc_async_client/issues/new?labels=bug&template=bug-report---.md",
+        "Source": "https://github.com/ostis-ai/py_sc_async_client",
     },
 )
