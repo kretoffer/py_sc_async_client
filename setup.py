@@ -7,7 +7,7 @@ DIRECTORY_PATH = Path(__file__).parent
 README = (DIRECTORY_PATH / "README.md").read_text()
 
 VERSION = "0.4.0"
-INSTALL_REQUIRES = ["websocket-client>=1.0.1"]
+INSTALL_REQUIRES = ["websockets==15.0.1"]
 CURRENT_PYTHON = sys.version_info[:2]
 REQUIRED_PYTHON = (3, 8)
 
@@ -55,6 +55,6 @@ setup(
     install_requires=INSTALL_REQUIRES,
     project_urls={
         "Bug Reports": "https://github.com/ostis-ai/py-sc-client/issues",
-        "Source": "https://github.com/ostis-ai/py-sc-client",
+        "Source": "https://github.com/kretoffer/py_sc_async_client",
     },
 )

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, TypedDict, Union, Optional
+from typing import Any, TypedDict, Union, Optional, List, Dict
 
 from sc_async_client.constants import ScType, common
 from sc_async_client.constants.exceptions import InvalidTypeError, LinkContentOversizeError
@@ -12,8 +12,8 @@ from sc_async_client.models.sc_addr import ScAddr
 
 class ScConstruction:
     def __init__(self) -> None:
-        self.aliases = {}
-        self.commands = []
+        self.aliases: Dict[str, int] = {}
+        self.commands: List[ScConstructionCommand] = []
 
     def generate_node(self, sc_type: ScType, alias: Optional[str] = None) -> None:
         if not sc_type.is_node():

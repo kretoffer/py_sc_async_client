@@ -16,4 +16,4 @@ repos:
     rev: v1.1.354
     hooks:
       - id: pyright
-        additional_dependencies: []
+        additional_dependencies: [websockets]
