@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from sc_async_client import session
 from sc_async_client.constants import common as c
-from sc_async_client.constants.sc_types import ScType
+from sc_async_client.constants.sc_type import ScType
 from sc_async_client.models import (
     Response,
     ScAddr,

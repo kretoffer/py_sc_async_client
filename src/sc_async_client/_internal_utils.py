@@ -5,7 +5,7 @@ Distributed under the MIT License
 """
 
 from sc_async_client.constants import common
-from sc_async_client.constants.sc_types import ScType
+from sc_async_client.constants.sc_type import ScType
 from sc_async_client.models import ScAddr, ScTemplateValue
 
 

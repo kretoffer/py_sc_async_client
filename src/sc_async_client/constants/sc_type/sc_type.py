@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import warnings
-
 from sc_async_client.constants.exceptions import InvalidTypeError
 from sc_async_client.constants.sc_type import bitmasks
 
@@ -42,10 +40,6 @@ class ScType:
 
     def is_connector(self) -> bool:
         return self._has_subtype(bitmasks.SC_TYPE_CONNECTOR)
-
-    def is_edge(self) -> bool:
-        warnings.warn("ScType `is_edge` method is deprecated. Use `is_connector` method instead.", DeprecationWarning)
-        return self.is_connector()
 
     def is_common_edge(self) -> bool:
         return self._has_subtype(bitmasks.SC_TYPE_COMMON_EDGE)
@@ -95,19 +89,11 @@ class ScType:
     def is_structure(self) -> bool:
         return self._has_subtype(bitmasks.SC_TYPE_NODE_STRUCTURE)
 
-    def is_struct(self) -> bool:
-        warnings.warn("ScType `is_struct` method is deprecated. Use `is_structure` method instead.", DeprecationWarning)
-        return self.is_structure()
-
     def is_role(self) -> bool:
         return self._has_subtype(bitmasks.SC_TYPE_NODE_ROLE)
 
     def is_non_role(self) -> bool:
         return self._has_subtype(bitmasks.SC_TYPE_NODE_NON_ROLE)
-
-    def is_norole(self) -> bool:
-        warnings.warn("ScType `is_norole` method is deprecated. Use `is_non_role` method instead.", DeprecationWarning)
-        return self.is_non_role()
 
     def is_class(self) -> bool:
         return self._has_subtype(bitmasks.SC_TYPE_NODE_CLASS)

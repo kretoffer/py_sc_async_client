@@ -18,3 +18,4 @@ filterwarnings = [
     "error",
     "ignore::DeprecationWarning"
 ]
+pythonpath = [".", "src"]

@@ -28,7 +28,7 @@ from sc_async_client.client._executor import Executor
 logger = logging.getLogger(__name__)
 
 
-async def default_reconnect_handler(retry: int) -> None:
+async def default_reconnect_handler(retry: int = 0)-> None:
     if _ScClientSession.url is not None:
         await establish_connection(_ScClientSession.url)
 

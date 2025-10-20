@@ -10,7 +10,7 @@ from __future__ import annotations
 from sc_async_client import session
 from sc_async_client.constants import common, exceptions
 from sc_async_client.constants.numeric import SERVER_RECONNECT_RETRIES, SERVER_RECONNECT_RETRY_DELAY
-from sc_async_client.constants.sc_types import ScType
+from sc_async_client.constants.sc_type import ScType
 from sc_async_client.models import (
     ScAddr,
     ScConstruction,
