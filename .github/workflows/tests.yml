@@ -6,11 +6,19 @@ on:
       - develop
       - main
       - 'release/**'
+    paths:
+      - 'src/**'
+      - 'tests/**'
+
   pull_request:
     branches:
       - develop
       - main
       - 'release/**'
+    paths:
+      - 'src/**'
+      - 'tests/**'
+
 
 jobs:
   test:
