@@ -1,7 +1,8 @@
 # py-sc-async-client
 
-<!-- ![Tests badge](https://github.com/ostis-ai/py-sc-client/actions/workflows/tests.yml/badge.svg?branch=main)
-![Push badge](https://github.com/ostis-ai/py-sc-client/actions/workflows/push.yml/badge.svg?branch=main) -->
+[![codecov](https://codecov.io/gh/kretoffer/py_sc_async_client/graph/badge.svg?token=95R6TLPQD2)](https://codecov.io/gh/kretoffer/py_sc_async_client)
+[![Tests](https://github.com/kretoffer/py_sc_async_client/actions/workflows/tests.yml/badge.svg)](https://github.com/kretoffer/py_sc_async_client/actions/workflows/tests.yml)
+[![Release](https://github.com/kretoffer/py_sc_async_client/actions/workflows/release.yml/badge.svg)](https://github.com/kretoffer/py_sc_async_client/actions/workflows/release.yml)
 
 The Python implementation of client for async communication with
 [the OSTIS Technology web-oriented platform](https://github.com/ostis-ai/ostis-web-platform/blob/develop/docs/main.pdf).

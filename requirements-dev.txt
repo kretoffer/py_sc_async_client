@@ -4,3 +4,4 @@ pre-commit
 ruff
 websockets
 setuptools
+pytest-asyncio

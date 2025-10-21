@@ -581,7 +581,7 @@ class TestScType(unittest.TestCase):
             assert sc_type.is_non_role() is False
 
     def test_is_class(self):
-        class_types = {t.NODE_CLASS, t.CONST_NODE_CLASS, t.VAR_NODE_CLASS}
+        class_types = {t.NODE_CLASS, t.CONST_NODE_CLASS, t.VAR_NODE_CLASS, t.NODE_LINK_CLASS, t.VAR_NODE_LINK_CLASS, t.CONST_NODE_LINK_CLASS}
         for sc_type in class_types:
             assert sc_type.is_class()
 
