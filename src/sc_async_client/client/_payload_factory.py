@@ -3,6 +3,7 @@ This source file is part of an OSTIS project. For the latest info, see https://g
 Distributed under the MIT License
 (See an accompanying file LICENSE or a copy at http://opensource.org/licenses/MIT)
 """
+
 # pyright: reportIncompatibleMethodOverride=false
 from __future__ import annotations
 
@@ -80,8 +81,12 @@ class GenerateElementsPayloadCreator(BasePayloadCreator):
 
 class GenerateElementsBySCsPayloadCreator(BasePayloadCreator):
     def __call__(self, scs_text: SCsText, *_):
-        if not isinstance(scs_text, list) or not all(isinstance(n, (str, SCs)) for n in scs_text):
-            raise exceptions.InvalidTypeError("expected object types: string or SCs(string, ScAddr)")
+        if not isinstance(scs_text, list) or not all(
+            isinstance(n, (str, SCs)) for n in scs_text
+        ):
+            raise exceptions.InvalidTypeError(
+                "expected object types: string or SCs(string, ScAddr)"
+            )
         payload = []
         for scs in scs_text:
             if isinstance(scs, str):
@@ -127,7 +132,7 @@ class SetLinkContentPayloadCreator(BasePayloadCreator):
                 common.COMMAND: common.CommandTypes.SET,
                 common.TYPE: content.type_to_str(),
                 common.DATA: content.data,
-                common.ADDR: content.addr.value, # type: ignore[reportOptionalMemberAccess]
+                common.ADDR: content.addr.value,  # type: ignore[reportOptionalMemberAccess]
             }
             for content in contents
         ]
@@ -150,8 +155,13 @@ class GetLinkContentPayloadCreator(BasePayloadCreator):
 
 class SearchLinksByContentPayloadCreator(BasePayloadCreator):
     def __call__(self, *contents: ScLinkContent | ScLinkContentData):
-        if not all(isinstance(content, (ScLinkContent, str, int, float)) for content in contents):
-            raise exceptions.InvalidTypeError("expected object types: ScLinkContent, str or int")
+        if not all(
+            isinstance(content, (ScLinkContent, str, int, float))
+            for content in contents
+        ):
+            raise exceptions.InvalidTypeError(
+                "expected object types: ScLinkContent, str or int"
+            )
         link_contents = []
         for content in contents:
             if isinstance(content, ScLinkContent):
@@ -183,7 +193,9 @@ class SearchLinksByContentSubstringPayloadCreator(SearchLinksByContentPayloadCre
         }
 
 
-class SearchLinksContentsByContentSubstringPayloadCreator(SearchLinksByContentPayloadCreator):
+class SearchLinksContentsByContentSubstringPayloadCreator(
+    SearchLinksByContentPayloadCreator
+):
     def _form_payload_content(self, content):
         return {
             common.COMMAND: common.CommandTypes.SEARCH_LINKS_CONTENTS_BY_CONTENT_SUBSTRING,
@@ -194,7 +206,9 @@ class SearchLinksContentsByContentSubstringPayloadCreator(SearchLinksByContentPa
 class ResolveKeynodesPayloadCreator(BasePayloadCreator):
     def __call__(self, *params: ScIdtfResolveParams):
         if not all(isinstance(par, dict) for par in params):
-            raise exceptions.InvalidTypeError("expected object types: ScIdtfResolveParams")
+            raise exceptions.InvalidTypeError(
+                "expected object types: ScIdtfResolveParams"
+            )
         payload = []
         for idtf_param in params:
             keynode_type = idtf_param.get(common.TYPE)
@@ -202,7 +216,9 @@ class ResolveKeynodesPayloadCreator(BasePayloadCreator):
                 payload_item = {
                     common.COMMAND: common.CommandTypes.RESOLVE,
                     common.IDTF: idtf_param.get(common.IDTF),
-                    common.ELEMENT_TYPE: idtf_param.get(common.TYPE).value if idtf_param.get(common.TYPE) else None, # type: ignore[reportOptionalMemberAccess]
+                    common.ELEMENT_TYPE: idtf_param.get(common.TYPE).value  # type: ignore[reportOptionalMemberAccess]
+                    if idtf_param.get(common.TYPE)
+                    else None,
                 }
             else:
                 payload_item = {
@@ -221,7 +237,9 @@ class TemplatePayloadCreator(BasePayloadCreator):
         *_,
     ):
         if not isinstance(template, (ScTemplate, str, ScTemplateIdtf, ScAddr)):
-            raise exceptions.InvalidTypeError("expected object types: ScTemplate | str | ScTemplateIdtf")
+            raise exceptions.InvalidTypeError(
+                "expected object types: ScTemplate | str | ScTemplateIdtf"
+            )
         if isinstance(template, ScAddr):
             payload_template = {
                 common.TYPE: common.Types.ADDR,
@@ -238,7 +256,9 @@ class TemplatePayloadCreator(BasePayloadCreator):
         if params is not None:
             origin = get_origin(ScTemplateParams)
             if not origin or not isinstance(params, origin):
-                raise exceptions.InvalidTypeError("expected object types: ScTemplateParams")
+                raise exceptions.InvalidTypeError(
+                    "expected object types: ScTemplateParams"
+                )
             for alias, addr in params.items():
                 if isinstance(addr, ScAddr):
                     payload_params.update({alias: addr.value})
@@ -256,8 +276,13 @@ class TemplatePayloadCreator(BasePayloadCreator):
 
 class CreateEventSubscriptionsPayloadCreator(BasePayloadCreator):
     def __call__(self, *event_subscription_params: ScEventSubscriptionParams):
-        if not all(isinstance(params, ScEventSubscriptionParams) for params in event_subscription_params):
-            raise exceptions.InvalidTypeError("expected object types: ScEventSubscriptionParams")
+        if not all(
+            isinstance(params, ScEventSubscriptionParams)
+            for params in event_subscription_params
+        ):
+            raise exceptions.InvalidTypeError(
+                "expected object types: ScEventSubscriptionParams"
+            )
         payload_generate = [
             {common.TYPE: params.event_type.value, common.ADDR: params.addr.value}
             for params in event_subscription_params
@@ -268,9 +293,18 @@ class CreateEventSubscriptionsPayloadCreator(BasePayloadCreator):
 
 class DestroyEventSubscriptionsPayloadCreator(BasePayloadCreator):
     def __call__(self, *event_subscription_params: ScEventSubscription):
-        if not all(isinstance(params, ScEventSubscription) for params in event_subscription_params):
-            raise exceptions.InvalidTypeError("expected object types: ScEventSubscription")
-        payload = {common.CommandTypes.ERASE: [params.id for params in event_subscription_params]}
+        if not all(
+            isinstance(params, ScEventSubscription)
+            for params in event_subscription_params
+        ):
+            raise exceptions.InvalidTypeError(
+                "expected object types: ScEventSubscription"
+            )
+        payload = {
+            common.CommandTypes.ERASE: [
+                params.id for params in event_subscription_params
+            ]
+        }
         return payload
 
 

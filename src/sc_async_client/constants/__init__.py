@@ -4,4 +4,4 @@ Distributed under the MIT License
 (See an accompanying file LICENSE or a copy at http://opensource.org/licenses/MIT)
 """
 
-from sc_async_client.constants.sc_type import ScType # noqa: F401
+from sc_async_client.constants.sc_type import ScType  # noqa: F401

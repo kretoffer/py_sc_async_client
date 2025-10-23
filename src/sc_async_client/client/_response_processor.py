@@ -53,7 +53,9 @@ class GetLinkContentResponseProcessor(BaseResponseProcessor):
         result = []
         for link in response_payload:
             str_type: str = link.get(c.TYPE)
-            result.append(ScLinkContent(link.get(c.VALUE), ScLinkContentType[str_type.upper()]))
+            result.append(
+                ScLinkContent(link.get(c.VALUE), ScLinkContentType[str_type.upper()])
+            )
         return result
 
 
@@ -61,11 +63,16 @@ class SearchLinksByContentResponseProcessor(BaseResponseProcessor):
     def __call__(self, response: Response, *_) -> list[list[ScAddr]]:
         response_payload = response.get(c.PAYLOAD)
         if response_payload:
-            return [[ScAddr(addr_value) for addr_value in addr_list] for addr_list in response_payload]
+            return [
+                [ScAddr(addr_value) for addr_value in addr_list]
+                for addr_list in response_payload
+            ]
         return response_payload
 
 
-class SearchLinksByContentSubstringResponseProcessor(SearchLinksByContentResponseProcessor):
+class SearchLinksByContentSubstringResponseProcessor(
+    SearchLinksByContentResponseProcessor
+):
     pass
 
 
@@ -116,7 +123,9 @@ class CreateEventSubscriptionsResponseProcessor(BaseResponseProcessor):
         for count, event_subscription_param in enumerate(event_subscriptions_params):
             command_id = response.get(c.PAYLOAD)[count]
             event_subscription = ScEventSubscription(
-                command_id, event_subscription_param.event_type, event_subscription_param.callback
+                command_id,
+                event_subscription_param.event_type,
+                event_subscription_param.callback,
             )
             session.set_event_subscription(event_subscription)
             result.append(event_subscription)
@@ -124,7 +133,9 @@ class CreateEventSubscriptionsResponseProcessor(BaseResponseProcessor):
 
 
 class DestroyEventSubscriptionsResponseProcessor(BaseResponseProcessor):
-    def __call__(self, response: Response, *event_subscriptions: ScEventSubscription) -> bool:
+    def __call__(
+        self, response: Response, *event_subscriptions: ScEventSubscription
+    ) -> bool:
         for event_subscription in event_subscriptions:
             session.drop_event_subscription(event_subscription.id)
         return response.get(c.STATUS)

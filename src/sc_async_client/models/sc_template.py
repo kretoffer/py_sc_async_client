@@ -35,7 +35,12 @@ class ScTemplateTriple:
     connector: ScTemplateValue
     target: ScTemplateValue
 
-    def __init__(self, source: ScTemplateParam, connector: ScTemplateParam, target: ScTemplateParam):
+    def __init__(
+        self,
+        source: ScTemplateParam,
+        connector: ScTemplateParam,
+        target: ScTemplateParam,
+    ):
         self.source = ScTemplateValue(source)
         self.connector = ScTemplateValue(connector)
         self.target = ScTemplateValue(target)

@@ -7,7 +7,9 @@ from sc_async_client.constants.sc_type import bitmasks
 class ScType:
     def __init__(self, value: int | ScType = 0):
         if not isinstance(value, (ScType, int)):
-            raise InvalidTypeError("You should use int or ScType type for ScType initialization")
+            raise InvalidTypeError(
+                "You should use int or ScType type for ScType initialization"
+            )
         if isinstance(value, ScType):
             value = value.value
         self.value: int = value
@@ -122,9 +124,13 @@ class ScType:
         self_value = self.value
         new_value = new_type.value
 
-        if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_ELEMENT_MASK):
+        if ScType._is_not_compatible_by_mask(
+            self_value, new_value, bitmasks.SC_TYPE_ELEMENT_MASK
+        ):
             return False
-        if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_CONSTANCY_MASK):
+        if ScType._is_not_compatible_by_mask(
+            self_value, new_value, bitmasks.SC_TYPE_CONSTANCY_MASK
+        ):
             return False
 
         if self.is_link():
@@ -134,7 +140,9 @@ class ScType:
             self_value &= ~bitmasks.SC_TYPE_NODE_LINK
             new_value &= ~bitmasks.SC_TYPE_NODE_LINK
 
-            if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_NODE_LINK_MASK):
+            if ScType._is_not_compatible_by_mask(
+                self_value, new_value, bitmasks.SC_TYPE_NODE_LINK_MASK
+            ):
                 return False
 
         elif self.is_node():
@@ -144,14 +152,18 @@ class ScType:
             self_value &= ~bitmasks.SC_TYPE_NODE
             new_value &= ~bitmasks.SC_TYPE_NODE
 
-            if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_NODE_MASK):
+            if ScType._is_not_compatible_by_mask(
+                self_value, new_value, bitmasks.SC_TYPE_NODE_MASK
+            ):
                 return False
 
         elif self.is_connector():
             if not new_type.is_connector():
                 return False
 
-            if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_CONNECTOR_MASK):
+            if ScType._is_not_compatible_by_mask(
+                self_value, new_value, bitmasks.SC_TYPE_CONNECTOR_MASK
+            ):
                 if self.is_common_edge():
                     if not new_type.is_common_edge():
                         return False
@@ -169,16 +181,24 @@ class ScType:
             self_value &= ~bitmasks.SC_TYPE_CONNECTOR_MASK
             new_value &= ~bitmasks.SC_TYPE_CONNECTOR_MASK
 
-            if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_ACTUALITY_MASK):
+            if ScType._is_not_compatible_by_mask(
+                self_value, new_value, bitmasks.SC_TYPE_ACTUALITY_MASK
+            ):
                 return False
 
-            if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_PERMANENCY_MASK):
+            if ScType._is_not_compatible_by_mask(
+                self_value, new_value, bitmasks.SC_TYPE_PERMANENCY_MASK
+            ):
                 return False
 
-            if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_POSITIVITY_MASK):
+            if ScType._is_not_compatible_by_mask(
+                self_value, new_value, bitmasks.SC_TYPE_POSITIVITY_MASK
+            ):
                 return False
 
-            if ScType._is_not_compatible_by_mask(self_value, new_value, bitmasks.SC_TYPE_FUZ_ARC):
+            if ScType._is_not_compatible_by_mask(
+                self_value, new_value, bitmasks.SC_TYPE_FUZ_ARC
+            ):
                 return False
 
         return True
@@ -190,4 +210,6 @@ class ScType:
 
     def change_const(self, is_const: bool) -> ScType:
         v = self.value & ~bitmasks.SC_TYPE_CONSTANCY_MASK
-        return ScType(v | (bitmasks.SC_TYPE_CONST if is_const else bitmasks.SC_TYPE_VAR))
+        return ScType(
+            v | (bitmasks.SC_TYPE_CONST if is_const else bitmasks.SC_TYPE_VAR)
+        )

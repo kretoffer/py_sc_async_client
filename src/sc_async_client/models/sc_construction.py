@@ -5,7 +5,10 @@ from enum import Enum
 from typing import Any, TypedDict, Union, Optional, List, Dict
 
 from sc_async_client.constants import ScType, common
-from sc_async_client.constants.exceptions import InvalidTypeError, LinkContentOversizeError
+from sc_async_client.constants.exceptions import (
+    InvalidTypeError,
+    LinkContentOversizeError,
+)
 from sc_async_client.constants.numeric import LINK_CONTENT_MAX_SIZE
 from sc_async_client.models.sc_addr import ScAddr
 
@@ -32,15 +35,22 @@ class ScConstruction:
     ) -> None:
         if not sc_type.is_connector():
             raise InvalidTypeError("You should pass the connector type here")
-        cmd = ScConstructionCommand(sc_type, {common.SOURCE: source, common.TARGET: target})
+        cmd = ScConstructionCommand(
+            sc_type, {common.SOURCE: source, common.TARGET: target}
+        )
         if alias:
             self.aliases[alias] = len(self.commands)
         self.commands.append(cmd)
 
-    def generate_link(self, sc_type: ScType, content: ScLinkContent, alias: Optional[str] = None) -> None:
+    def generate_link(
+        self, sc_type: ScType, content: ScLinkContent, alias: Optional[str] = None
+    ) -> None:
         if not sc_type.is_link():
             raise InvalidTypeError("You should pass the link type here")
-        cmd = ScConstructionCommand(sc_type, {common.CONTENT: content.data, common.TYPE: content.content_type.value})
+        cmd = ScConstructionCommand(
+            sc_type,
+            {common.CONTENT: content.data, common.TYPE: content.content_type.value},
+        )
         if alias:
             self.aliases[alias] = len(self.commands)
         self.commands.append(cmd)

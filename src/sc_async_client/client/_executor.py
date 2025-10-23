@@ -1,7 +1,13 @@
 from sc_async_client import session
 from sc_async_client.client._payload_factory import PayloadFactory
 from sc_async_client.client._response_processor import ResponseProcessor
-from sc_async_client.constants.common import ERRORS, MESSAGE, REF, ClientCommand, RequestType
+from sc_async_client.constants.common import (
+    ERRORS,
+    MESSAGE,
+    REF,
+    ClientCommand,
+    RequestType,
+)
 from sc_async_client.constants.exceptions import ServerError
 
 from typing import Dict
@@ -38,15 +44,19 @@ class Executor:
         if response is None:
             assert TypeError("response must be Response, but is None")
 
-        if response.get(ERRORS): # type: ignore[reportOptionalMemberAccess]
+        if response.get(ERRORS):  # type: ignore[reportOptionalMemberAccess]
             error_msgs = []
-            errors = response.get(ERRORS) # type: ignore[reportOptionalMemberAccess]
+            errors = response.get(ERRORS)  # type: ignore[reportOptionalMemberAccess]
             errors = errors if errors else []
             if isinstance(errors, str):
                 error_msgs.append(errors)
             else:
                 for error in errors:
-                    payload_part = "\nPayload: " + str(payload[int(error.get(REF))]) if error.get(REF) else "" # type: ignore[reportOptionalSubscript]
+                    payload_part = (
+                        "\nPayload: " + str(payload[int(error.get(REF))]) # type: ignore[reportOptionalSubscript]
+                        if error.get(REF)
+                        else ""
+                    )
                     error_msgs.append(error.get(MESSAGE) + payload_part)
             error_msgs = "\n".join(error_msgs)
             raise ServerError(error_msgs)

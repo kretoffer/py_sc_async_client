@@ -21,9 +21,7 @@ if CURRENT_PYTHON < REQUIRED_PYTHON:
             This version of py-sc-client requires at least Python {}.{}, but
             you're trying to install it on Python {}.{}. To resolve this,
             consider upgrading to a supported Python version.
-            """.format(
-            *REQUIRED_PYTHON, *CURRENT_PYTHON
-        )
+            """.format(*REQUIRED_PYTHON, *CURRENT_PYTHON)
     )
     sys.exit(1)
 

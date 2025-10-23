@@ -9,7 +9,10 @@ from __future__ import annotations
 
 from sc_async_client import session
 from sc_async_client.constants import common, exceptions
-from sc_async_client.constants.numeric import SERVER_RECONNECT_RETRIES, SERVER_RECONNECT_RETRY_DELAY
+from sc_async_client.constants.numeric import (
+    SERVER_RECONNECT_RETRIES,
+    SERVER_RECONNECT_RETRY_DELAY,
+)
 from sc_async_client.constants.sc_type import ScType
 from sc_async_client.models import (
     ScAddr,
@@ -76,16 +79,28 @@ async def get_link_content(*addr: ScAddr) -> list[ScLinkContent]:
     return await session.execute(common.ClientCommand.GET_LINK_CONTENT, *addr)
 
 
-async def search_links_by_contents(*contents: ScLinkContent | ScLinkContentData) -> list[list[ScAddr]]:
-    return await session.execute(common.ClientCommand.SEARCH_LINKS_BY_CONTENT, *contents)
+async def search_links_by_contents(
+    *contents: ScLinkContent | ScLinkContentData,
+) -> list[list[ScAddr]]:
+    return await session.execute(
+        common.ClientCommand.SEARCH_LINKS_BY_CONTENT, *contents
+    )
 
 
-async def search_links_by_contents_substrings(*contents: ScLinkContent | ScLinkContentData) -> list[list[ScAddr]]:
-    return await session.execute(common.ClientCommand.SEARCH_LINKS_BY_CONTENT_SUBSTRING, *contents)
+async def search_links_by_contents_substrings(
+    *contents: ScLinkContent | ScLinkContentData,
+) -> list[list[ScAddr]]:
+    return await session.execute(
+        common.ClientCommand.SEARCH_LINKS_BY_CONTENT_SUBSTRING, *contents
+    )
 
 
-async def search_link_contents_by_content_substrings(*contents: ScLinkContent | ScLinkContentData) -> list[list[ScAddr]]:
-    return await session.execute(common.ClientCommand.SEARCH_LINKS_CONTENTS_BY_CONTENT_SUBSTRING, *contents)
+async def search_link_contents_by_content_substrings(
+    *contents: ScLinkContent | ScLinkContentData,
+) -> list[list[ScAddr]]:
+    return await session.execute(
+        common.ClientCommand.SEARCH_LINKS_CONTENTS_BY_CONTENT_SUBSTRING, *contents
+    )
 
 
 async def resolve_keynodes(*params: ScIdtfResolveParams) -> list[ScAddr]:
@@ -93,23 +108,37 @@ async def resolve_keynodes(*params: ScIdtfResolveParams) -> list[ScAddr]:
 
 
 async def search_by_template(
-    template: ScTemplate | str | ScTemplateIdtf | ScAddr, params: ScTemplateParams | None = None
+    template: ScTemplate | str | ScTemplateIdtf | ScAddr,
+    params: ScTemplateParams | None = None,
 ) -> list[ScTemplateResult]:
-    return await session.execute(common.ClientCommand.SEARCH_BY_TEMPLATE, template, params)
+    return await session.execute(
+        common.ClientCommand.SEARCH_BY_TEMPLATE, template, params
+    )
 
 
 async def generate_by_template(
-    template: ScTemplate | str | ScTemplateIdtf | ScAddr, params: ScTemplateParams | None = None
+    template: ScTemplate | str | ScTemplateIdtf | ScAddr,
+    params: ScTemplateParams | None = None,
 ) -> ScTemplateResult:
-    return await session.execute(common.ClientCommand.GENERATE_BY_TEMPLATE, template, params)
+    return await session.execute(
+        common.ClientCommand.GENERATE_BY_TEMPLATE, template, params
+    )
 
 
-async def create_elementary_event_subscriptions(*params: ScEventSubscriptionParams) -> list[ScEventSubscription]:
-    return await session.execute(common.ClientCommand.CREATE_EVENT_SUBSCRIPTIONS, *params)
+async def create_elementary_event_subscriptions(
+    *params: ScEventSubscriptionParams,
+) -> list[ScEventSubscription]:
+    return await session.execute(
+        common.ClientCommand.CREATE_EVENT_SUBSCRIPTIONS, *params
+    )
 
 
-async def destroy_elementary_event_subscriptions(*event_subscriptions: ScEventSubscription) -> bool:
-    return await session.execute(common.ClientCommand.DESTROY_EVENT_SUBSCRIPTIONS, *event_subscriptions)
+async def destroy_elementary_event_subscriptions(
+    *event_subscriptions: ScEventSubscription,
+) -> bool:
+    return await session.execute(
+        common.ClientCommand.DESTROY_EVENT_SUBSCRIPTIONS, *event_subscriptions
+    )
 
 
 async def is_event_subscription_valid(event_subscription: ScEventSubscription) -> bool:

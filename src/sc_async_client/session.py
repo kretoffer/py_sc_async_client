@@ -16,7 +16,7 @@ from sc_async_client.constants.numeric import (
     SERVER_RECONNECT_RETRY_DELAY,
     LOGGING_MAX_SIZE,
     MAX_PAYLOAD_SIZE,
-    SERVER_RESPONSE_TIMEOUT
+    SERVER_RESPONSE_TIMEOUT,
 )
 from sc_async_client.models import ScEventSubscription, Response, ScAddr
 from sc_async_client.constants.common import ClientCommand
@@ -28,7 +28,7 @@ from sc_async_client.client._executor import Executor
 logger = logging.getLogger(__name__)
 
 
-async def default_reconnect_handler(retry: int = 0)-> None:
+async def default_reconnect_handler(retry: int = 0) -> None:
     if _ScClientSession.url is not None:
         await establish_connection(_ScClientSession.url)
 
@@ -79,7 +79,9 @@ async def _on_message(response_input: str | bytes) -> None:
     if response.get(common.EVENT):
         asyncio.create_task(_emit_callback(command_id, response.get(common.PAYLOAD)))
     else:
-        future: None | asyncio.Future = _ScClientSession.pending_futures.pop(command_id, None)
+        future: None | asyncio.Future = _ScClientSession.pending_futures.pop(
+            command_id, None
+        )
         if future and not future.done():
             future.set_result(response)
 
@@ -117,7 +119,10 @@ def set_error_handler(callback) -> None:
 
 
 def set_reconnect_handler(
-    reconnect_callback, post_reconnect_callback, reconnect_retries: int, reconnect_retry_delay: float
+    reconnect_callback,
+    post_reconnect_callback,
+    reconnect_retries: int,
+    reconnect_retry_delay: float,
 ) -> None:
     _ScClientSession.reconnect_callback = reconnect_callback
     _ScClientSession.post_reconnect_callback = post_reconnect_callback
@@ -127,6 +132,7 @@ def set_reconnect_handler(
 
 async def establish_connection(url) -> None:
     _ScClientSession.url = url
+
     async def connect():
         try:
             async with websockets.connect(url) as conn:
@@ -175,10 +181,14 @@ async def _send_message(data: str, retries: int, retry: int = 0) -> None:
             await _ScClientSession.reconnect_callback(retry)
             await _send_message(data, retries, retry + 1)
         else:
-            await _on_error(ConnectionAbortedError("Sc-server takes a long time to respond"))
+            await _on_error(
+                ConnectionAbortedError("Sc-server takes a long time to respond")
+            )
 
 
-async def send_message(request_type: common.RequestType, payload: Any) -> Response | None:
+async def send_message(
+    request_type: common.RequestType, payload: Any
+) -> Response | None:
     async with _ScClientSession.lock_instance:
         _ScClientSession.command_id += 1
         command_id = _ScClientSession.command_id
@@ -194,7 +204,9 @@ async def send_message(request_type: common.RequestType, payload: Any) -> Respon
     len_data = len(data.encode("utf-8"))
     if len_data > MAX_PAYLOAD_SIZE:
         await _on_error(
-            PayloadMaxSizeError(f"Data is too large: {len_data} > {MAX_PAYLOAD_SIZE} bytes")
+            PayloadMaxSizeError(
+                f"Data is too large: {len_data} > {MAX_PAYLOAD_SIZE} bytes"
+            )
         )
         return None
 
@@ -205,9 +217,13 @@ async def send_message(request_type: common.RequestType, payload: Any) -> Respon
     await _send_message(data, _ScClientSession.reconnect_retries)
 
     try:
-        response: Response | None = await asyncio.wait_for(future, timeout=SERVER_RESPONSE_TIMEOUT)
+        response: Response | None = await asyncio.wait_for(
+            future, timeout=SERVER_RESPONSE_TIMEOUT
+        )
     except asyncio.TimeoutError:
-        await _on_error(ConnectionAbortedError("Sc-server takes a long time to respond"))
+        await _on_error(
+            ConnectionAbortedError("Sc-server takes a long time to respond")
+        )
         response = None
 
     return response
@@ -222,7 +238,9 @@ def drop_event_subscription(event_subscription_id: int):
 
 
 def set_event_subscription(event_subscription: ScEventSubscription) -> None:
-    _ScClientSession.event_subscriptions_dict[event_subscription.id] = event_subscription
+    _ScClientSession.event_subscriptions_dict[event_subscription.id] = (
+        event_subscription
+    )
 
 
 async def execute(request_type: ClientCommand, *args):

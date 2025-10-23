@@ -6,7 +6,9 @@ from sc_async_client.constants.exceptions import InvalidTypeError
 class ScAddr:
     def __init__(self, value: int = 0) -> None:
         if not isinstance(value, int):
-            raise InvalidTypeError("You should to use int type for ScAddr initialization")
+            raise InvalidTypeError(
+                "You should to use int type for ScAddr initialization"
+            )
         self.value = value
 
     def __hash__(self) -> int:

@@ -4,7 +4,7 @@ Distributed under the MIT License
 (See an accompanying file LICENSE or a copy at http://opensource.org/licenses/MIT)
 """
 
-from sc_async_client.client._api import ( # noqa: F401
+from sc_async_client.client._api import (  # noqa: F401
     connect,
     create_elementary_event_subscriptions,
     destroy_elementary_event_subscriptions,
@@ -24,5 +24,5 @@ from sc_async_client.client._api import ( # noqa: F401
     search_links_by_contents_substrings,
     set_error_handler,
     set_link_contents,
-    set_reconnect_handler
+    set_reconnect_handler,
 )

@@ -52,10 +52,8 @@ class TestScType(unittest.TestCase):
             t.ARC,
             t.COMMON_ARC,
             t.MEMBERSHIP_ARC,
-
             t.CONST,
             t.VAR,
-
             t.CONST_NODE,
             t.VAR_NODE,
             t.CONST_CONNECTOR,
@@ -68,67 +66,51 @@ class TestScType(unittest.TestCase):
             t.VAR_COMMON_ARC,
             t.CONST_MEMBERSHIP_ARC,
             t.VAR_MEMBERSHIP_ARC,
-
             t.PERM_ARC,
             t.TEMP_ARC,
-
             t.CONST_PERM_ARC,
             t.VAR_PERM_ARC,
             t.CONST_TEMP_ARC,
             t.VAR_TEMP_ARC,
-
             t.ACTUAL_TEMP_ARC,
             t.INACTUAL_TEMP_ARC,
-
             t.CONST_ACTUAL_TEMP_ARC,
             t.VAR_ACTUAL_TEMP_ARC,
             t.CONST_INACTUAL_TEMP_ARC,
             t.VAR_INACTUAL_TEMP_ARC,
-
             t.POS_ARC,
             t.NEG_ARC,
-
             t.FUZ_ARC,
-
             t.CONST_POS_ARC,
             t.VAR_POS_ARC,
-
             t.PERM_POS_ARC,
             t.TEMP_POS_ARC,
             t.ACTUAL_TEMP_POS_ARC,
             t.INACTUAL_TEMP_POS_ARC,
-
             t.CONST_PERM_POS_ARC,
             t.CONST_TEMP_POS_ARC,
             t.CONST_ACTUAL_TEMP_POS_ARC,
             t.CONST_INACTUAL_TEMP_POS_ARC,
-
             t.VAR_PERM_POS_ARC,
             t.VAR_TEMP_POS_ARC,
             t.VAR_ACTUAL_TEMP_POS_ARC,
             t.VAR_INACTUAL_TEMP_POS_ARC,
-
             t.CONST_NEG_ARC,
             t.VAR_NEG_ARC,
-
             t.PERM_NEG_ARC,
             t.TEMP_NEG_ARC,
             t.ACTUAL_TEMP_NEG_ARC,
             t.INACTUAL_TEMP_NEG_ARC,
-
             t.CONST_PERM_NEG_ARC,
             t.CONST_TEMP_NEG_ARC,
             t.CONST_ACTUAL_TEMP_NEG_ARC,
             t.CONST_INACTUAL_TEMP_NEG_ARC,
-
             t.VAR_PERM_NEG_ARC,
             t.VAR_TEMP_NEG_ARC,
             t.VAR_ACTUAL_TEMP_NEG_ARC,
             t.VAR_INACTUAL_TEMP_NEG_ARC,
-
             t.CONST_FUZ_ARC,
             t.VAR_FUZ_ARC,
-
             t.NODE_LINK,
             t.NODE_LINK_CLASS,
             t.NODE_TUPLE,
@@ -138,7 +120,6 @@ class TestScType(unittest.TestCase):
             t.NODE_CLASS,
             t.NODE_SUPERCLASS,
             t.NODE_MATERIAL,
-
             t.CONST_NODE_LINK,
             t.CONST_NODE_LINK_CLASS,
             t.CONST_NODE_TUPLE,
@@ -148,7 +129,6 @@ class TestScType(unittest.TestCase):
             t.CONST_NODE_CLASS,
             t.CONST_NODE_SUPERCLASS,
             t.CONST_NODE_MATERIAL,
-
             t.VAR_NODE_LINK,
             t.VAR_NODE_LINK_CLASS,
             t.VAR_NODE_TUPLE,
@@ -157,7 +137,7 @@ class TestScType(unittest.TestCase):
             t.VAR_NODE_NON_ROLE,
             t.VAR_NODE_CLASS,
             t.VAR_NODE_SUPERCLASS,
-            t.VAR_NODE_MATERIAL
+            t.VAR_NODE_MATERIAL,
         }
 
     def test_init(self):
@@ -181,7 +161,6 @@ class TestScType(unittest.TestCase):
             t.NODE_CLASS,
             t.NODE_SUPERCLASS,
             t.NODE_MATERIAL,
-
             t.CONST_NODE,
             t.CONST_NODE_LINK,
             t.CONST_NODE_LINK_CLASS,
@@ -192,7 +171,6 @@ class TestScType(unittest.TestCase):
             t.CONST_NODE_CLASS,
             t.CONST_NODE_SUPERCLASS,
             t.CONST_NODE_MATERIAL,
-
             t.VAR_NODE,
             t.VAR_NODE_LINK,
             t.VAR_NODE_LINK_CLASS,
@@ -202,7 +180,7 @@ class TestScType(unittest.TestCase):
             t.VAR_NODE_NON_ROLE,
             t.VAR_NODE_CLASS,
             t.VAR_NODE_SUPERCLASS,
-            t.VAR_NODE_MATERIAL
+            t.VAR_NODE_MATERIAL,
         }
         for sc_type in node_types:
             assert sc_type.is_node()
@@ -216,7 +194,6 @@ class TestScType(unittest.TestCase):
             t.ARC,
             t.COMMON_ARC,
             t.MEMBERSHIP_ARC,
-
             t.CONST_CONNECTOR,
             t.VAR_CONNECTOR,
             t.CONST_COMMON_EDGE,
@@ -227,64 +204,49 @@ class TestScType(unittest.TestCase):
             t.VAR_COMMON_ARC,
             t.CONST_MEMBERSHIP_ARC,
             t.VAR_MEMBERSHIP_ARC,
-
             t.PERM_ARC,
             t.TEMP_ARC,
-
             t.CONST_PERM_ARC,
             t.VAR_PERM_ARC,
             t.CONST_TEMP_ARC,
             t.VAR_TEMP_ARC,
-
             t.ACTUAL_TEMP_ARC,
             t.INACTUAL_TEMP_ARC,
-
             t.CONST_ACTUAL_TEMP_ARC,
             t.VAR_ACTUAL_TEMP_ARC,
             t.CONST_INACTUAL_TEMP_ARC,
             t.VAR_INACTUAL_TEMP_ARC,
-
             t.POS_ARC,
             t.NEG_ARC,
-
             t.FUZ_ARC,
-
             t.CONST_POS_ARC,
             t.VAR_POS_ARC,
-
             t.PERM_POS_ARC,
             t.TEMP_POS_ARC,
             t.ACTUAL_TEMP_POS_ARC,
             t.INACTUAL_TEMP_POS_ARC,
-
             t.CONST_PERM_POS_ARC,
             t.CONST_TEMP_POS_ARC,
             t.CONST_ACTUAL_TEMP_POS_ARC,
             t.CONST_INACTUAL_TEMP_POS_ARC,
-
             t.VAR_PERM_POS_ARC,
             t.VAR_TEMP_POS_ARC,
             t.VAR_ACTUAL_TEMP_POS_ARC,
             t.VAR_INACTUAL_TEMP_POS_ARC,
-
             t.CONST_NEG_ARC,
             t.VAR_NEG_ARC,
-
             t.PERM_NEG_ARC,
             t.TEMP_NEG_ARC,
             t.ACTUAL_TEMP_NEG_ARC,
             t.INACTUAL_TEMP_NEG_ARC,
-
             t.CONST_PERM_NEG_ARC,
             t.CONST_TEMP_NEG_ARC,
             t.CONST_ACTUAL_TEMP_NEG_ARC,
             t.CONST_INACTUAL_TEMP_NEG_ARC,
-
             t.VAR_PERM_NEG_ARC,
             t.VAR_TEMP_NEG_ARC,
             t.VAR_ACTUAL_TEMP_NEG_ARC,
             t.VAR_INACTUAL_TEMP_NEG_ARC,
-
             t.CONST_FUZ_ARC,
             t.VAR_FUZ_ARC,
         }
@@ -294,7 +256,14 @@ class TestScType(unittest.TestCase):
             assert sc_type.is_connector() is False
 
     def test_is_link(self):
-        link_types = {t.CONST_NODE_LINK, t.CONST_NODE_LINK_CLASS, t.VAR_NODE_LINK, t.VAR_NODE_LINK_CLASS, t.NODE_LINK, t.NODE_LINK_CLASS}
+        link_types = {
+            t.CONST_NODE_LINK,
+            t.CONST_NODE_LINK_CLASS,
+            t.VAR_NODE_LINK,
+            t.VAR_NODE_LINK_CLASS,
+            t.NODE_LINK,
+            t.NODE_LINK_CLASS,
+        }
         for sc_type in link_types:
             assert sc_type.is_link()
         for sc_type in self.types.difference(link_types):
@@ -303,36 +272,27 @@ class TestScType(unittest.TestCase):
     def test_is_const(self):
         const_types = {
             t.CONST,
-
             t.CONST_NODE,
             t.CONST_CONNECTOR,
             t.CONST_COMMON_EDGE,
             t.CONST_ARC,
             t.CONST_COMMON_ARC,
             t.CONST_MEMBERSHIP_ARC,
-
             t.CONST_PERM_ARC,
             t.CONST_TEMP_ARC,
-
             t.CONST_ACTUAL_TEMP_ARC,
             t.CONST_INACTUAL_TEMP_ARC,
-
             t.CONST_POS_ARC,
-
             t.CONST_PERM_POS_ARC,
             t.CONST_TEMP_POS_ARC,
             t.CONST_ACTUAL_TEMP_POS_ARC,
             t.CONST_INACTUAL_TEMP_POS_ARC,
-
             t.CONST_NEG_ARC,
-
             t.CONST_PERM_NEG_ARC,
             t.CONST_TEMP_NEG_ARC,
             t.CONST_ACTUAL_TEMP_NEG_ARC,
             t.CONST_INACTUAL_TEMP_NEG_ARC,
-
             t.CONST_FUZ_ARC,
-
             t.CONST_NODE_LINK,
             t.CONST_NODE_LINK_CLASS,
             t.CONST_NODE_TUPLE,
@@ -352,36 +312,27 @@ class TestScType(unittest.TestCase):
     def test_is_var(self):
         var_types = {
             t.VAR,
-
             t.VAR_NODE,
             t.VAR_CONNECTOR,
             t.VAR_COMMON_EDGE,
             t.VAR_ARC,
             t.VAR_COMMON_ARC,
             t.VAR_MEMBERSHIP_ARC,
-
             t.VAR_PERM_ARC,
             t.VAR_TEMP_ARC,
-
             t.VAR_ACTUAL_TEMP_ARC,
             t.VAR_INACTUAL_TEMP_ARC,
-
             t.VAR_POS_ARC,
-
             t.VAR_PERM_POS_ARC,
             t.VAR_TEMP_POS_ARC,
             t.VAR_ACTUAL_TEMP_POS_ARC,
             t.VAR_INACTUAL_TEMP_POS_ARC,
-
             t.VAR_NEG_ARC,
-
             t.VAR_PERM_NEG_ARC,
             t.VAR_TEMP_NEG_ARC,
             t.VAR_ACTUAL_TEMP_NEG_ARC,
             t.VAR_INACTUAL_TEMP_NEG_ARC,
-
             t.VAR_FUZ_ARC,
-
             t.VAR_NODE_LINK,
             t.VAR_NODE_LINK_CLASS,
             t.VAR_NODE_TUPLE,
@@ -414,7 +365,7 @@ class TestScType(unittest.TestCase):
             t.CONST_ACTUAL_TEMP_NEG_ARC,
             t.VAR_ACTUAL_TEMP_NEG_ARC,
             t.CONST_INACTUAL_TEMP_NEG_ARC,
-            t.VAR_INACTUAL_TEMP_NEG_ARC
+            t.VAR_INACTUAL_TEMP_NEG_ARC,
         }
         for sc_type in neg_types:
             assert sc_type.is_neg()
@@ -438,7 +389,7 @@ class TestScType(unittest.TestCase):
             t.CONST_ACTUAL_TEMP_POS_ARC,
             t.VAR_ACTUAL_TEMP_POS_ARC,
             t.CONST_INACTUAL_TEMP_POS_ARC,
-            t.VAR_INACTUAL_TEMP_POS_ARC
+            t.VAR_INACTUAL_TEMP_POS_ARC,
         }
         for sc_type in pos_types:
             assert sc_type.is_pos()
@@ -447,11 +398,7 @@ class TestScType(unittest.TestCase):
             assert sc_type.is_pos() is False
 
     def test_is_fuz(self):
-        fuz_types = {
-            t.FUZ_ARC,
-            t.CONST_FUZ_ARC,
-            t.VAR_FUZ_ARC
-        }
+        fuz_types = {t.FUZ_ARC, t.CONST_FUZ_ARC, t.VAR_FUZ_ARC}
         for sc_type in fuz_types:
             assert sc_type.is_fuz()
 
@@ -504,7 +451,7 @@ class TestScType(unittest.TestCase):
             t.CONST_INACTUAL_TEMP_POS_ARC,
             t.VAR_INACTUAL_TEMP_POS_ARC,
             t.CONST_INACTUAL_TEMP_NEG_ARC,
-            t.VAR_INACTUAL_TEMP_NEG_ARC
+            t.VAR_INACTUAL_TEMP_NEG_ARC,
         }
         for sc_type in temp_types:
             assert sc_type.is_temp()
@@ -557,7 +504,11 @@ class TestScType(unittest.TestCase):
             assert sc_type.is_tuple() is False
 
     def test_is_structure(self):
-        structure_types = {t.NODE_STRUCTURE, t.CONST_NODE_STRUCTURE, t.VAR_NODE_STRUCTURE}
+        structure_types = {
+            t.NODE_STRUCTURE,
+            t.CONST_NODE_STRUCTURE,
+            t.VAR_NODE_STRUCTURE,
+        }
         for sc_type in structure_types:
             assert sc_type.is_structure()
 
@@ -581,7 +532,14 @@ class TestScType(unittest.TestCase):
             assert sc_type.is_non_role() is False
 
     def test_is_class(self):
-        class_types = {t.NODE_CLASS, t.CONST_NODE_CLASS, t.VAR_NODE_CLASS, t.NODE_LINK_CLASS, t.VAR_NODE_LINK_CLASS, t.CONST_NODE_LINK_CLASS}
+        class_types = {
+            t.NODE_CLASS,
+            t.CONST_NODE_CLASS,
+            t.VAR_NODE_CLASS,
+            t.NODE_LINK_CLASS,
+            t.VAR_NODE_LINK_CLASS,
+            t.CONST_NODE_LINK_CLASS,
+        }
         for sc_type in class_types:
             assert sc_type.is_class()
 
@@ -589,7 +547,11 @@ class TestScType(unittest.TestCase):
             assert sc_type.is_class() is False
 
     def test_is_superclass(self):
-        superclass_types = {t.NODE_SUPERCLASS, t.CONST_NODE_SUPERCLASS, t.VAR_NODE_SUPERCLASS}
+        superclass_types = {
+            t.NODE_SUPERCLASS,
+            t.CONST_NODE_SUPERCLASS,
+            t.VAR_NODE_SUPERCLASS,
+        }
         for sc_type in superclass_types:
             assert sc_type.is_superclass()
 
@@ -616,13 +578,21 @@ class TestScType(unittest.TestCase):
         assert t.CONST_NODE.merge(t.CONST_NODE_CLASS) == t.CONST_NODE_CLASS
         assert t.NODE.merge(t.NODE_LINK_CLASS) == t.NODE_LINK_CLASS
         assert t.CONNECTOR.merge(t.CONST_MEMBERSHIP_ARC) == t.CONST_MEMBERSHIP_ARC
-        with pytest.raises(InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value):
+        with pytest.raises(
+            InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value
+        ):
             t.CONST.merge(t.NODE)
-        with pytest.raises(InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value):
+        with pytest.raises(
+            InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value
+        ):
             t.CONNECTOR.merge(t.NODE)
-        with pytest.raises(InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value):
+        with pytest.raises(
+            InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value
+        ):
             t.COMMON_EDGE.merge(t.COMMON_ARC)
-        with pytest.raises(InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value):
+        with pytest.raises(
+            InvalidTypeError, match=CommonErrorMessages.INVALID_TYPE.value
+        ):
             t.COMMON_ARC.merge(t.MEMBERSHIP_ARC)
 
     def test_has_constancy(self):
