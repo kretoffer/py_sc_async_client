@@ -9,7 +9,7 @@ README = (DIRECTORY_PATH / "README.md").read_text()
 VERSION = "0.4.0"
 INSTALL_REQUIRES = ["websockets==15.0.1"]
 CURRENT_PYTHON = sys.version_info[:2]
-REQUIRED_PYTHON = (3, 8)
+REQUIRED_PYTHON = (3, 9)
 
 
 if CURRENT_PYTHON < REQUIRED_PYTHON:
@@ -42,16 +42,17 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
     ],
     keywords="sc-client, sc client, async_sc_client, async sc client, sc async client, sc_async_client",
     packages=find_packages(where="src", exclude=("tests",)),
     package_dir={"": "src"},
-    python_requires=">=3.8, <4",
+    python_requires=">=3.9, <4",
     install_requires=INSTALL_REQUIRES,
     project_urls={
         "Bug Reports": "https://github.com/ostis-ai/py_sc_async_client/issues/new?labels=bug&template=bug-report---.md",
