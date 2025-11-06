@@ -7,7 +7,7 @@ Distributed under the MIT License
 import logging
 import asyncio
 import websockets
-from typing import Callable, Awaitable, Dict, Any, cast
+from typing import Callable, Awaitable, Dict, Any, cast, Optional, Union
 import json
 
 from sc_async_client.constants.numeric import (
@@ -47,7 +47,7 @@ class _ScClientSession:
     is_open: bool = False
     command_id: int = 0
     executor: Executor = Executor()
-    connection: websockets.ClientConnection | None = None
+    connection: Optional[websockets.ClientConnection] = None
     post_reconnect_callback: Callable[..., Awaitable[None]] = noop_async
     error_handler: Callable[[Exception], Awaitable[None]] = default_error_handler
     reconnect_callback: Callable[[int], Awaitable[None]] = default_reconnect_handler
@@ -71,7 +71,7 @@ class _ScClientSession:
         cls.reconnect_retry_delay = SERVER_RECONNECT_RETRY_DELAY
 
 
-async def _on_message(response_input: str | bytes) -> None:
+async def _on_message(response_input: Union[str, bytes]) -> None:
     logger.debug(f"Receive: {str(response_input)[:LOGGING_MAX_SIZE]}")
     response = cast(Response, json.loads(response_input))
     command_id = response.get(common.ID)
@@ -79,7 +79,7 @@ async def _on_message(response_input: str | bytes) -> None:
     if response.get(common.EVENT):
         asyncio.create_task(_emit_callback(command_id, response.get(common.PAYLOAD)))
     else:
-        future: None | asyncio.Future = _ScClientSession.pending_futures.pop(
+        future: Optional[asyncio.Future] = _ScClientSession.pending_futures.pop(
             command_id, None
         )
         if future and not future.done():
@@ -188,7 +188,7 @@ async def _send_message(data: str, retries: int, retry: int = 0) -> None:
 
 async def send_message(
     request_type: common.RequestType, payload: Any
-) -> Response | None:
+) -> Optional[Response]:
     async with _ScClientSession.lock_instance:
         _ScClientSession.command_id += 1
         command_id = _ScClientSession.command_id
@@ -217,7 +217,7 @@ async def send_message(
     await _send_message(data, _ScClientSession.reconnect_retries)
 
     try:
-        response: Response | None = await asyncio.wait_for(
+        response: Optional[Response] = await asyncio.wait_for(
             future, timeout=SERVER_RESPONSE_TIMEOUT
         )
     except asyncio.TimeoutError:
@@ -229,7 +229,7 @@ async def send_message(
     return response
 
 
-def get_event_subscription(event_subscription_id: int) -> ScEventSubscription | None:
+def get_event_subscription(event_subscription_id: int) -> Optional[ScEventSubscription]:
     return _ScClientSession.event_subscriptions_dict.get(event_subscription_id)
 
 
