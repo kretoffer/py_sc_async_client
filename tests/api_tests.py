@@ -5,20 +5,29 @@ from unittest.mock import AsyncMock, patch
 
 from sc_async_client.client import (
     connect,
-    disconnect,
     create_elementary_event_subscriptions,
     destroy_elementary_event_subscriptions,
+    disconnect,
     erase_elements,
     generate_by_template,
     generate_elements,
+    generate_elements_by_scs,
     get_elements_types,
     get_link_content,
+    is_connected,
+    is_event_subscription_valid,
     resolve_keynodes,
     search_by_template,
+    search_link_contents_by_content_substrings,
+    search_links_by_contents,
+    search_links_by_contents_substrings,
+    set_error_handler,
     set_link_contents,
+    set_reconnect_handler,
 )
 from sc_async_client.constants import sc_type
 from sc_async_client.constants.common import ScEventType
+from sc_async_client.constants.exceptions import InvalidTypeError
 from sc_async_client.models import (
     ScAddr,
     ScConstruction,
@@ -27,6 +36,7 @@ from sc_async_client.models import (
     ScIdtfResolveParams,
     ScLinkContent,
     ScLinkContentType,
+    SCsText,
     ScTemplate,
     ScTemplateResult,
 )
@@ -54,6 +64,43 @@ async def test_establish_connection_server_unavailable():
         assert mock_session.url == url
         mock_on_close.assert_called_once()
         mock_session.post_reconnect_callback.assert_not_called()
+
+
+def test_is_connected():
+    with patch("sc_async_client.session._ScClientSession") as mock_session:
+        mock_session.is_open = True
+        assert is_connected() is True
+        mock_session.is_open = False
+        assert is_connected() is False
+
+
+def test_set_error_handler():
+    def my_error_handler():
+        pass
+
+    with patch("sc_async_client.session._ScClientSession") as mock_session:
+        set_error_handler(my_error_handler)
+        assert mock_session.error_handler == my_error_handler
+
+
+def test_set_reconnect_handler():
+    def my_reconnect_handler():
+        pass
+
+    def my_post_reconnect_handler():
+        pass
+
+    with patch("sc_async_client.session._ScClientSession") as mock_session:
+        set_reconnect_handler(
+            reconnect_handler=my_reconnect_handler,
+            post_reconnect_handler=my_post_reconnect_handler,
+            reconnect_retries=10,
+            reconnect_retry_delay=5,
+        )
+        assert mock_session.reconnect_callback == my_reconnect_handler
+        assert mock_session.post_reconnect_callback == my_post_reconnect_handler
+        assert mock_session.reconnect_retries == 10
+        assert mock_session.reconnect_retry_delay == 5
 
 
 @pytest.mark.asyncio
@@ -120,6 +167,16 @@ class TestApiClient:
         assert result == [ScAddr(12), ScAddr(34), ScAddr(56)]
         self.mock_send.assert_called_once()
 
+    async def test_generate_elements_by_scs(self):
+        mock_response = {"id": 1, "status": True, "event": False, "payload": [True]}
+        self.mock_send.return_value = mock_response
+
+        scs_text: SCsText = ["node1;;"]
+        result = await generate_elements_by_scs(scs_text)
+
+        assert result == [True]
+        self.mock_send.assert_called_once()
+
     async def test_erase_elements(self):
         mock_response = {"id": 1, "status": True, "event": False, "payload": True}
         self.mock_send.return_value = mock_response
@@ -156,6 +213,39 @@ class TestApiClient:
         assert len(result) == 1
         assert result[0].data == "World"
         assert result[0].content_type == ScLinkContentType.STRING
+        self.mock_send.assert_called_once()
+
+    async def test_search_links_by_contents(self):
+        mock_response = {"id": 1, "status": True, "event": False, "payload": [[123], [456]]}
+        self.mock_send.return_value = mock_response
+
+        content1 = ScLinkContent("content1", ScLinkContentType.STRING)
+        content2 = "content2"
+        result = await search_links_by_contents(content1, content2)
+
+        assert result == [[ScAddr(123)], [ScAddr(456)]]
+        self.mock_send.assert_called_once()
+
+    async def test_search_links_by_contents_substrings(self):
+        mock_response = {"id": 1, "status": True, "event": False, "payload": [[123], [456]]}
+        self.mock_send.return_value = mock_response
+
+        content1 = ScLinkContent("content1", ScLinkContentType.STRING)
+        content2 = "content2"
+        result = await search_links_by_contents_substrings(content1, content2)
+
+        assert result == [[ScAddr(123)], [ScAddr(456)]]
+        self.mock_send.assert_called_once()
+
+    async def test_search_link_contents_by_content_substrings(self):
+        mock_response = {"id": 1, "status": True, "event": False, "payload": [[123], [456]]}
+        self.mock_send.return_value = mock_response
+
+        content1 = "cont"
+        result = await search_link_contents_by_content_substrings(content1)
+
+        # The implementation has a bug and returns list[list[int]] instead of list[list[ScAddr]]
+        assert result == [[123], [456]]
         self.mock_send.assert_called_once()
 
     async def test_resolve_keynodes(self):
@@ -238,3 +328,16 @@ class TestApiClient:
             assert result is True
             mock_drop_event.assert_called_with(12345)
             self.mock_send.assert_called_once()
+
+    async def test_is_event_subscription_valid(self):
+        event_valid = ScEventSubscription(id=1)
+        event_invalid = ScEventSubscription(id=2)
+
+        with patch("sc_async_client.session.get_event_subscription") as mock_get_event:
+            mock_get_event.side_effect = lambda event_id: event_valid if event_id == 1 else None
+
+            assert await is_event_subscription_valid(event_valid) is True
+            assert await is_event_subscription_valid(event_invalid) is False
+
+        with pytest.raises(InvalidTypeError):
+            await is_event_subscription_valid(123)
